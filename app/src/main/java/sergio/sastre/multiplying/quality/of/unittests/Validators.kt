@@ -1,13 +1,11 @@
-package sergio.sastre.multiplying.quality.of.unittests.refactored
-
-import sergio.sastre.multiplying.quality.of.unittests.RequirementValidator
+package sergio.sastre.multiplying.quality.of.unittests
 
 class ContainsUpperCaseLetterValidator :
     RequirementValidator {
     override val keywordOnError: String? = "no upper case letters"
 
     override fun isValid(password: String?): Boolean =
-        password?.contains("[0-9]".toRegex()) == true
+        password?.contains("[A-Z]".toRegex()) == true
 }
 
 class ContainsLowerCaseLetterValidator :
@@ -23,7 +21,7 @@ class ContainsDigitValidator :
     override val keywordOnError: String? = "no digits"
 
     override fun isValid(password: String?): Boolean =
-        password?.contains("[A-Z]".toRegex()) == true
+        password?.contains("[0-9]".toRegex()) == true
 }
 
 class MinCharsValidator(private val minCharsCount: Int) :
