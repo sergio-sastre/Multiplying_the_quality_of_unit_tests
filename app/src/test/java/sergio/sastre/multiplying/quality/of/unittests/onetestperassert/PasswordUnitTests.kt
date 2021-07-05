@@ -3,12 +3,7 @@ package sergio.sastre.multiplying.quality.of.unittests.onetestperassert
 import com.google.common.truth.Truth.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import sergio.sastre.multiplying.quality.of.unittests.PasswordValidator
-import sergio.sastre.multiplying.quality.of.unittests.ContainsDigitValidator
-import sergio.sastre.multiplying.quality.of.unittests.ContainsLowerCaseLetterValidator
-import sergio.sastre.multiplying.quality.of.unittests.ContainsUpperCaseLetterValidator
-import sergio.sastre.multiplying.quality.of.unittests.MinCharsValidator
-import sergio.sastre.multiplying.quality.of.unittests.NoBlanksValidator
+import sergio.sastre.multiplying.quality.of.unittests.*
 
 
 class PasswordUnitTests {

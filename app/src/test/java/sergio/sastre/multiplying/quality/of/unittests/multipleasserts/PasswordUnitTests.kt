@@ -14,9 +14,7 @@ class PasswordUnitTests {
         val passwordValidator =
             PasswordValidator(
                 ContainsUpperCaseLetterValidator(),
-                MinCharsValidator(
-                    6
-                ),
+                MinCharsValidator(6),
                 ContainsDigitValidator()
             )
 

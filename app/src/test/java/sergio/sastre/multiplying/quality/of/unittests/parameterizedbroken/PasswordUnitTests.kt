@@ -1,11 +1,12 @@
-package sergio.sastre.multiplying.quality.of.unittests.parameterized
+package sergio.sastre.multiplying.quality.of.unittests.parameterizedbroken
 
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import sergio.sastre.multiplying.quality.of.unittests.*
+import sergio.sastre.multiplying.quality.of.unittests.broken.ContainsUpperCaseLetterValidator
 
 class PasswordUnitTests {
 
@@ -31,36 +32,26 @@ class PasswordUnitTests {
         )
         fun testPasswordValidatorRight(password: String?, expectedError: String?) {
             val actualError = passwordValidator.validate(password)
-            assertThat(actualError).contains(expectedError)
+            Truth.assertThat(actualError).contains(expectedError)
         }
     }
 
     @Nested
-    inner class PasswordValidatorValidatesTrue {
-        @DisplayName("PasswordValidator for partially invalid passwords")
-        @ParameterizedTest(name = "When password is \"{0}\", the error does not contain \"{1}\"")
+    inner class PasswordValidatorWithFailingSample {
+
+        @DisplayName("PasswordValidator for invalid passwords")
+        @ParameterizedTest(name = "When password is \"{0}\", the error contains \"{1}\"")
         @CsvSource(
-            "A23456, no upper case letters",
-            "1BCDEF, no digits",
-            "hELLO, no lower case letters",
-            "123456, contains less than 6 chars",
-            "123456, contains blanks"
+            "a23456, no upper case letters", //extra sample that uncovers the error
+            "123456, no upper case letters",
+            "ABCDEF, no digits",
+            "HELLO, no lower case letters",
+            "1234A, contains less than 6 chars",
+            "12 3 456, contains blanks"
         )
         fun testPasswordValidatorRight(password: String?, expectedError: String?) {
             val actualError = passwordValidator.validate(password)
-            assertThat(actualError).doesNotContain(expectedError)
-        }
-    }
-
-    @Nested
-    inner class PasswordValidatorFullyValidPassword {
-        @DisplayName("PasswordValidator for fully valid passwords")
-        @ParameterizedTest(name = "When password is \"{0}\", the error is null")
-        @CsvSource("aA123456")
-        fun when_PasswordMeetsAllRequirements_returnsNull(password: String?) {
-            assertThat(
-                passwordValidator.validate(password)
-            ).isNull()
+            Truth.assertThat(actualError).contains(expectedError)
         }
     }
 }
