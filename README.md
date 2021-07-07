@@ -5,4 +5,4 @@ You can find the blog posts here:
 
 [Multiplying the quality of your Unit Tests (Part1) with Parameterized Tests](https://sergiosastre.hashnode.dev/multiplying-the-quality-of-your-unit-tests-part-1)
 
-[Multiplying the quality of your Unit Tests (Part1) with Property-Based Tests](https://sergiosastre.hashnode.dev/multiplying-the-quality-of-your-unit-tests-part-2)
+[Multiplying the quality of your Unit Tests (Part2) with Property-Based Tests](https://sergiosastre.hashnode.dev/multiplying-the-quality-of-your-unit-tests-part-2)
