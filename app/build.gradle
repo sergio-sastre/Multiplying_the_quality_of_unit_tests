@@ -28,7 +28,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
+        freeCompilerArgs = [
+                "-Xjsr305=strict", // Strict interpretation of nullability annotations in jqwik API
+                "-Xemit-jvm-type-annotations" // Enable nnotations on type variables
+        ]
         jvmTarget = '1.8'
+        javaParameters = true // Get correct parameter names in jqwik reporting
     }
 
     testOptions {
@@ -39,11 +44,10 @@ android {
             include '**/*Properties.class'
             include '**/*Test.class'
             include '**/*Tests.class'
+            include '**/*Examples.class'
         }
     }
 }
-
-
 
 dependencies {
 
@@ -58,6 +62,6 @@ dependencies {
     testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.7.1"
     testImplementation "com.google.truth:truth:1.1.2"
 
-    testImplementation "net.jqwik:jqwik-api:1.5.1"
-    testImplementation "net.jqwik:jqwik-engine:1.5.1"
+    testImplementation("net.jqwik:jqwik:1.6.0-SNAPSHOT")
+    testImplementation("net.jqwik:jqwik-kotlin:1.6.0-SNAPSHOT")
 }

@@ -3,7 +3,6 @@ package sergio.sastre.multiplying.quality.of.unittests.pbt
 import com.google.common.truth.Truth.assertThat
 import net.jqwik.api.*
 import net.jqwik.api.arbitraries.ListArbitrary
-import net.jqwik.engine.properties.arbitraries.DefaultListArbitrary
 import sergio.sastre.multiplying.quality.of.unittests.*
 import sergio.sastre.multiplying.quality.of.unittests.broken.ContainsUpperCaseLetterValidator
 
@@ -67,7 +66,7 @@ class PasswordUnitTests {
             Arbitraries.strings().ascii().filter { it.contains("[a-z]".toRegex()) }
 
         @Label(
-            "WIf password without lower case chars, " +
+            "If password without lower case chars, " +
                     "then the error message contains 'no lower case letters'"
         )
         @Property
@@ -212,9 +211,7 @@ class PasswordUnitTests {
 
         @Provide
         fun failingValidators(): ListArbitrary<FailingValidator> =
-            DefaultListArbitrary<FailingValidator>(
-                Arbitraries.integers().map { FailingValidator() }
-            )
+                Arbitraries.integers().map { FailingValidator() }.list()
 
         @Label(
             "When PasswordValidator fails " +
