@@ -18,10 +18,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        // Only necessary if you use jqwik's SNAPSHOT releases
-        maven {
-            url 'https://oss.sonatype.org/content/repositories/snapshots'
-        }
     }
 }
 

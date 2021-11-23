@@ -30,7 +30,7 @@ android {
     kotlinOptions {
         freeCompilerArgs = [
                 "-Xjsr305=strict", // Strict interpretation of nullability annotations in jqwik API
-                "-Xemit-jvm-type-annotations" // Enable nnotations on type variables
+                "-Xemit-jvm-type-annotations" // Enable annotations on type variables
         ]
         jvmTarget = '1.8'
         javaParameters = true // Get correct parameter names in jqwik reporting
@@ -62,6 +62,6 @@ dependencies {
     testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.7.1"
     testImplementation "com.google.truth:truth:1.1.2"
 
-    testImplementation("net.jqwik:jqwik:1.6.0-SNAPSHOT")
-    testImplementation("net.jqwik:jqwik-kotlin:1.6.0-SNAPSHOT")
+    testImplementation("net.jqwik:jqwik:1.6.0")
+    testImplementation("net.jqwik:jqwik-kotlin:1.6.0")
 }
