@@ -1,10 +1,11 @@
 package sergio.sastre.multiplying.quality.of.unittests.pbt
 
-import com.google.common.truth.Truth.assertThat
 import net.jqwik.api.*
 import net.jqwik.api.arbitraries.ListArbitrary
 import sergio.sastre.multiplying.quality.of.unittests.*
 import sergio.sastre.multiplying.quality.of.unittests.broken.ContainsUpperCaseLetterValidator
+import strikt.api.expectThat
+import strikt.assertions.*
 
 @Group
 class PasswordUnitTests {
@@ -38,7 +39,9 @@ class PasswordUnitTests {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            assertThat(actualError).contains("no upper case letters")
+            expectThat(actualError)
+                .isNotNull()
+                .contains("no upper case letters")
         }
 
         @Label(
@@ -50,7 +53,7 @@ class PasswordUnitTests {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            actualError.assertNullOrDoesNotContain("no upper case letters")
+            expectThat(actualError).isNullOrDoesNotContain("no upper case letters")
         }
     }
 
@@ -74,7 +77,10 @@ class PasswordUnitTests {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            assertThat(actualError).contains("no lower case letters")
+
+            expectThat(actualError)
+                .isNotNull()
+                .contains("no lower case letters")
         }
 
         @Label(
@@ -86,7 +92,7 @@ class PasswordUnitTests {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            actualError.assertNullOrDoesNotContain("no lower case letters")
+            expectThat(actualError).isNullOrDoesNotContain("no lower case letters")
         }
     }
 
@@ -110,7 +116,9 @@ class PasswordUnitTests {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            assertThat(actualError).contains("no digits")
+            expectThat(actualError)
+                .isNotNull()
+                .contains("no digits")
         }
 
         @Label(
@@ -122,7 +130,7 @@ class PasswordUnitTests {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            actualError.assertNullOrDoesNotContain("no digits")
+            expectThat(actualError).isNullOrDoesNotContain("no digits")
         }
     }
 
@@ -147,7 +155,9 @@ class PasswordUnitTests {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            assertThat(actualError).contains("contains less than 6 chars")
+            expectThat(actualError)
+                .isNotNull()
+                .contains("contains less than 6 chars")
         }
 
         @Label(
@@ -159,7 +169,7 @@ class PasswordUnitTests {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            actualError.assertNullOrDoesNotContain("contains less than 6 chars")
+            expectThat(actualError).isNullOrDoesNotContain("contains less than 6 chars")
         }
     }
 
@@ -183,7 +193,9 @@ class PasswordUnitTests {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            assertThat(actualError).contains("contains blanks")
+            expectThat(actualError)
+                .isNotNull()
+                .contains("contains blanks")
         }
 
         @Label(
@@ -195,7 +207,7 @@ class PasswordUnitTests {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            actualError.assertNullOrDoesNotContain("contains blanks")
+            expectThat(actualError).isNullOrDoesNotContain("contains blanks")
         }
     }
 
@@ -211,7 +223,7 @@ class PasswordUnitTests {
 
         @Provide
         fun failingValidators(): ListArbitrary<FailingValidator> =
-                Arbitraries.integers().map { FailingValidator() }.list()
+            Arbitraries.integers().map { FailingValidator() }.list()
 
         @Label(
             "When PasswordValidator fails " +
@@ -225,8 +237,8 @@ class PasswordUnitTests {
             val passwordValidator = PasswordValidator(*failingValidators.toTypedArray())
             val errorMessage = passwordValidator.validate(failingPassword)
 
-            assertThat(errorMessage.amountOf(','))
-                .isAtLeast((failingValidators.size - 1))
+            expectThat(errorMessage.amountOf(','))
+                .isGreaterThanOrEqualTo((failingValidators.size - 1))
         }
     }
 }

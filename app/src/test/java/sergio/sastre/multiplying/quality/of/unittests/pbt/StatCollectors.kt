@@ -8,6 +8,10 @@ fun statsUpperCase(password: String?) {
         .collect(if (withUpperCase == true) "with upper case" else "without upper case")
 }
 
+fun statsNull(password: String?){
+    label("is null").collect(if (password == null) "is null" else "is not null")
+}
+
 fun statsLowerCase(password: String?) {
     val withLowerCase = password?.contains("[a-z]".toRegex())
     label("Lower case")
@@ -38,4 +42,5 @@ fun collectPasswordStats(password: String?) {
     statsDigits(password)
     statsPasswordLength(password)
     statsBlanks(password)
+    statsNull(password)
 }

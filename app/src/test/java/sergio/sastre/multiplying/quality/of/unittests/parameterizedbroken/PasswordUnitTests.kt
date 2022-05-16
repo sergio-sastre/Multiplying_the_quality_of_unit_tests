@@ -1,12 +1,14 @@
 package sergio.sastre.multiplying.quality.of.unittests.parameterizedbroken
 
-import com.google.common.truth.Truth
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import sergio.sastre.multiplying.quality.of.unittests.*
 import sergio.sastre.multiplying.quality.of.unittests.broken.ContainsUpperCaseLetterValidator
+import strikt.api.expectThat
+import strikt.assertions.contains
+import strikt.assertions.isNotNull
 
 class PasswordUnitTests {
 
@@ -30,9 +32,11 @@ class PasswordUnitTests {
             "1234A, contains less than 6 chars",
             "12 3 456, contains blanks"
         )
-        fun testPasswordValidatorRight(password: String?, expectedError: String?) {
+        fun testPasswordValidatorRight(password: String, expectedError: String) {
             val actualError = passwordValidator.validate(password)
-            Truth.assertThat(actualError).contains(expectedError)
+            expectThat(actualError)
+                .isNotNull()
+                .contains(expectedError)
         }
     }
 
@@ -49,9 +53,11 @@ class PasswordUnitTests {
             "1234A, contains less than 6 chars",
             "12 3 456, contains blanks"
         )
-        fun testPasswordValidatorRight(password: String?, expectedError: String?) {
+        fun testPasswordValidatorRight(password: String, expectedError: String) {
             val actualError = passwordValidator.validate(password)
-            Truth.assertThat(actualError).contains(expectedError)
+            expectThat(actualError)
+                .isNotNull()
+                .contains(expectedError)
         }
     }
 }

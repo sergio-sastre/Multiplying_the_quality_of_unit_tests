@@ -60,7 +60,11 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.8.2"
     testImplementation "org.junit.jupiter:junit-jupiter-params:5.8.2"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.8.2"
+
     testImplementation "com.google.truth:truth:1.1.2"
+
+    testImplementation "io.strikt:strikt-core:0.34.1"
+    testImplementation "io.strikt:strikt-jvm:0.34.1"
 
     testRuntimeOnly "net.jqwik:jqwik-engine:1.6.5"
     testImplementation "net.jqwik:jqwik:1.6.5"

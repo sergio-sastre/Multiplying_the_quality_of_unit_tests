@@ -1,9 +1,13 @@
 package sergio.sastre.multiplying.quality.of.unittests.onetestperassert
 
-import com.google.common.truth.Truth.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import sergio.sastre.multiplying.quality.of.unittests.*
+import sergio.sastre.multiplying.quality.of.unittests.pbt.doesNotContain
+import strikt.api.expectThat
+import strikt.assertions.contains
+import strikt.assertions.isNotNull
+import strikt.assertions.isNull
 
 
 class PasswordUnitTests {
@@ -20,38 +24,42 @@ class PasswordUnitTests {
 
         @Test
         fun when_PasswordWithoutUpperCase() {
-            assertThat(
-                passwordValidator.validate("123456")
-            ).contains("no upper case letters")
+            val actualError = passwordValidator.validate("123456")
+            expectThat(actualError)
+                .isNotNull()
+                .contains("no upper case letters")
         }
 
         @Test
         fun when_PasswordWithoutLowerCase() {
-            assertThat(
-                passwordValidator.validate("HELLO")
-            ).contains("no lower case letters")
+            val actualError = passwordValidator.validate("HELLO")
+            expectThat(actualError)
+                .isNotNull()
+                .contains("no lower case letters")
         }
 
         @Test
         fun when_PasswordValidatorNoDigits() {
-            assertThat(
-                passwordValidator.validate("ABCDEF")
-            ).contains("no digits")
+            val actualError = passwordValidator.validate("ABCDEF")
+            expectThat(actualError)
+                .isNotNull()
+                .contains("no digits")
         }
 
         @Test
         fun when_PasswordValidatorHasBlanks() {
-            assertThat(
-                passwordValidator.validate("12 3 456")
-            ).contains("contains blanks")
+            val actualError = passwordValidator.validate("12 3 456")
+            expectThat(actualError)
+                .isNotNull()
+                .contains("contains blanks")
         }
 
         @Test
         fun when_PasswordValidatorHasLessThan6Chars() {
-            assertThat(
-                passwordValidator.validate("1234A")
-            ).contains("contains less than 6 chars")
-
+            val actualError = passwordValidator.validate("1234A")
+            expectThat(actualError)
+                .isNotNull()
+                .contains("contains less than 6 chars")
         }
     }
 
@@ -59,37 +67,42 @@ class PasswordUnitTests {
     inner class PasswordValidatorValidatesTrue {
         @Test
         fun when_PasswordWithUpperCase() {
-            assertThat(
-                passwordValidator.validate("A12345")
-            ).doesNotContain("no upper case letters")
+            val actualError = passwordValidator.validate("A12345")
+            expectThat(actualError)
+                .isNotNull()
+                .doesNotContain("no upper case letters")
         }
 
         @Test
         fun when_PasswordWithLowerCase() {
-            assertThat(
-                passwordValidator.validate("hELLO")
-            ).doesNotContain("no lower case letters")
+            val actualError = passwordValidator.validate("hELLO")
+            expectThat(actualError)
+                .isNotNull()
+                .doesNotContain("no lower case letters")
         }
 
         @Test
         fun when_PasswordValidatorHasDigits() {
-            assertThat(
-                passwordValidator.validate("1BCDEF")
-            ).doesNotContain("no digits")
+            val actualError = passwordValidator.validate("1BCDEF")
+            expectThat(actualError)
+                .isNotNull()
+                .doesNotContain("no digits")
         }
 
         @Test
         fun when_PasswordValidatorHasBlanks() {
-            assertThat(
-                passwordValidator.validate("123456")
-            ).doesNotContain("contains blanks")
+            val actualError = passwordValidator.validate("123456")
+            expectThat(actualError)
+                .isNotNull()
+                .doesNotContain("contains blanks")
         }
 
         @Test
         fun when_PasswordValidatorHasAtLeast6Chars() {
-            assertThat(
-                passwordValidator.validate("123456")
-            ).doesNotContain("contains less than 6 chars")
+            val actualError = passwordValidator.validate("123456")
+            expectThat(actualError)
+                .isNotNull()
+                .doesNotContain("contains less than 6 chars")
         }
     }
 
@@ -97,9 +110,8 @@ class PasswordUnitTests {
     inner class PasswordValidatorFullyValidPassword {
         @Test
         fun when_PasswordMeetsAllRequirements_returnsNull() {
-            assertThat(
-                passwordValidator.validate("aA123456")
-            ).isNull()
+            val actualError = passwordValidator.validate("aA123456")
+            expectThat(actualError).isNull()
         }
     }
 }
