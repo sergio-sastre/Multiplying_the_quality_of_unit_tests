@@ -1,7 +1,9 @@
 # Multiplying the quality of unit tests
-An Android project highlighting the benefits of *parameterized tests* over multiple assertions, and how *property-based tests* help us catch regression bugs that standard *unit tests* or *parameterized tests* cannot.
+An Android project in *Jetpack Compose* to showcase how to improve our unit tests step by step:
+- From tests *multiple assertions* to *parameterized example-based tests*,
+- Add extra *property-based tests* to catch regression bugs that *parameterized tests* cannot.
 
-For that, we test the **strong password validator** of a **Create account** screen, written with *Jetpack Compose*.
+For that, we test the logic behind the **strong password validator** of a **create account** screen.
 
 <p align="center">
 <img width="250" src="https://user-images.githubusercontent.com/6097181/169895372-f21adba4-5478-4bd4-8b9d-3676da049d4d.gif">
