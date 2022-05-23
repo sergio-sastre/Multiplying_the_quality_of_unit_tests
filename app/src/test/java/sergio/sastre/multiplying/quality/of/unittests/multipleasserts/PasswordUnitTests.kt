@@ -1,15 +1,26 @@
 package sergio.sastre.multiplying.quality.of.unittests.multipleasserts
 
-import com.google.common.truth.Truth.*
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import sergio.sastre.multiplying.quality.of.unittests.*
+import sergio.sastre.multiplying.quality.of.unittests.pbt.doesNotContain
+import sergio.sastre.multiplying.quality.of.unittests.model.validators.*
+import strikt.api.expectThat
+import strikt.assertions.contains
+import strikt.assertions.isNotNull
+import strikt.assertions.isNull
 
-
+/**
+ * This class shows the problem of having several asserts.
+ * The more password requirements we get, the more of asserts per test.
+ * It also means, the test will fail fast:
+ * - If several asserts fail, we'll only know about the first one.
+ *
+ * This is very inconvenient if having many assertions in one test
+ */
 class PasswordUnitTests {
 
     @Nested
-    inner class Initial {
+    inner class InitialPasswordValidator {
 
         val passwordValidator =
             PasswordValidator(
@@ -22,17 +33,17 @@ class PasswordUnitTests {
         inner class PasswordValidatorShowsCorrectError {
             @Test
             fun when_WithMissingRequirement() {
-                assertThat(
-                    passwordValidator.validate("123456")
-                ).contains("no upper case letters")
+                expectThat(passwordValidator.validate("123456"))
+                    .isNotNull()
+                    .contains("must contain upper case letters")
 
-                assertThat(
-                    passwordValidator.validate("1234A")
-                ).contains("contains less than 6 chars")
+                expectThat(passwordValidator.validate("1234A"))
+                    .isNotNull()
+                    .contains("must contain at least 6 chars")
 
-                assertThat(
-                    passwordValidator.validate("ABCDEF")
-                ).contains("no digits")
+                expectThat(passwordValidator.validate("ABCDEF"))
+                    .isNotNull()
+                    .contains("must contain digits")
             }
         }
 
@@ -40,17 +51,17 @@ class PasswordUnitTests {
         inner class PasswordValidatorValidatesTrue {
             @Test
             fun when_WithMissingRequirement() {
-                assertThat(
-                    passwordValidator.validate("A2345")
-                ).doesNotContain("no upper case letters")
+                expectThat(passwordValidator.validate("A2345"))
+                    .isNotNull()
+                    .doesNotContain("no upper case letters")
 
-                assertThat(
-                    passwordValidator.validate("123456")
-                ).doesNotContain("contains less than 6 chars")
+                expectThat(passwordValidator.validate("123456"))
+                    .isNotNull()
+                    .doesNotContain("contains less than 6 chars")
 
-                assertThat(
-                    passwordValidator.validate("1BCDE")
-                ).doesNotContain("no digits")
+                expectThat(passwordValidator.validate("1BCDE"))
+                    .isNotNull()
+                    .doesNotContain("no digits")
             }
         }
 
@@ -58,15 +69,14 @@ class PasswordUnitTests {
         inner class PasswordValidatorFullyValidPassword {
             @Test
             fun when_PasswordMeetsAllRequirements_returnsNull() {
-                assertThat(
-                    passwordValidator.validate("aA123456")
-                ).isNull()
+                expectThat(passwordValidator.validate("aA123456"))
+                    .isNull()
             }
         }
     }
 
     @Nested
-    inner class Advanced {
+    inner class AdvancedPasswordValidator {
 
         private val passwordValidator = PasswordValidator(
             ContainsUpperCaseLetterValidator(),
@@ -80,25 +90,25 @@ class PasswordUnitTests {
         inner class PasswordValidatorShowsCorrectError {
             @Test
             fun when_WithMissingRequirement() {
-                assertThat(
-                    passwordValidator.validate("123456")
-                ).contains("no upper case letters")
+                expectThat(passwordValidator.validate("123456"))
+                    .isNotNull()
+                    .contains("must contain upper case letters")
 
-                assertThat(
-                    passwordValidator.validate("1234A")
-                ).contains("contains less than 6 chars")
+                expectThat(passwordValidator.validate("1234A"))
+                    .isNotNull()
+                    .contains("must contain at least 6 chars")
 
-                assertThat(
-                    passwordValidator.validate("ABCDEF")
-                ).contains("no digits")
+                expectThat(passwordValidator.validate("ABCDEF"))
+                    .isNotNull()
+                    .contains("must contain digits")
 
-                assertThat(
-                    passwordValidator.validate("HELLO")
-                ).contains("no lower case letters")
+                expectThat(passwordValidator.validate("HELLO"))
+                    .isNotNull()
+                    .contains("must contain lower case letters")
 
-                assertThat(
-                    passwordValidator.validate("12 3 456")
-                ).contains("contains blanks")
+                expectThat(passwordValidator.validate("12 3 456"))
+                    .isNotNull()
+                    .contains("must not contain blanks")
             }
         }
 
@@ -106,25 +116,25 @@ class PasswordUnitTests {
         inner class PasswordValidatorValidatesTrue {
             @Test
             fun when_WithMissingRequirement() {
-                assertThat(
-                    passwordValidator.validate("A23456")
-                ).doesNotContain("no upper case letters")
+                expectThat(passwordValidator.validate("A23456"))
+                    .isNotNull()
+                    .doesNotContain("must contain upper case letters")
 
-                assertThat(
-                    passwordValidator.validate("123456")
-                ).doesNotContain("contains less than 6 chars")
+                expectThat(passwordValidator.validate("123456"))
+                    .isNotNull()
+                    .doesNotContain("must contain at least 6 chars")
 
-                assertThat(
-                    passwordValidator.validate("1BCDEF")
-                ).doesNotContain("no digits")
+                expectThat(passwordValidator.validate("1BCDEF"))
+                    .isNotNull()
+                    .doesNotContain("must contain digits")
 
-                assertThat(
-                    passwordValidator.validate("hELLO")
-                ).doesNotContain("no lower case letters")
+                expectThat(passwordValidator.validate("hELLO"))
+                    .isNotNull()
+                    .doesNotContain("must contain lower case letters")
 
-                assertThat(
-                    passwordValidator.validate("123456")
-                ).doesNotContain("contains blanks")
+                expectThat(passwordValidator.validate("123456"))
+                    .isNotNull()
+                    .doesNotContain("must not contain blanks")
             }
         }
 
@@ -132,9 +142,8 @@ class PasswordUnitTests {
         inner class PasswordValidatorFullyValidPassword {
             @Test
             fun when_PasswordMeetsAllRequirements_returnsNull() {
-                assertThat(
-                    passwordValidator.validate("aA123456")
-                ).isNull()
+                expectThat(passwordValidator.validate("aA123456"))
+                    .isNull()
             }
         }
     }

@@ -1,5 +1,8 @@
-package sergio.sastre.multiplying.quality.of.unittests
+package sergio.sastre.multiplying.quality.of.unittests.model.validators
 
+/**
+ * Validates all [validators] and returns their errors separated by commas
+ */
 class PasswordValidator(private vararg val validators: RequirementValidator) :
     RequirementValidator {
 

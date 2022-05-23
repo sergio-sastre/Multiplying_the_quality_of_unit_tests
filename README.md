@@ -1,5 +1,7 @@
 # Multiplying_the_quality_of_unit_tests
-A Project highlighting the benefits of Parameterized Tests over multiple assertions, and how Property-Based Tests help us catch regression bugs that standard Unit Tests or Parameterized Tests cannot
+A Project highlighting the benefits of Parameterized Tests over multiple assertions, and how Property-Based Tests help us catch regression bugs that standard Unit Tests or Parameterized Tests cannot.
+
+For that, we test the "strong password validator" of a "Create account" screen, written with Jetpack Compose.
 
 You can find the blog posts on the topic here:
 

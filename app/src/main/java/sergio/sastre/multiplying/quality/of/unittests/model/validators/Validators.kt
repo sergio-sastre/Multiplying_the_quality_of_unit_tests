@@ -1,8 +1,8 @@
-package sergio.sastre.multiplying.quality.of.unittests
+package sergio.sastre.multiplying.quality.of.unittests.model.validators
 
 class ContainsUpperCaseLetterValidator :
     RequirementValidator {
-    override val keywordOnError: String? = "no upper case letters"
+    override val keywordOnError: String = "must contain upper case letters"
 
     override fun isValid(password: String?): Boolean =
         password?.contains("[A-Z]".toRegex()) == true
@@ -10,7 +10,7 @@ class ContainsUpperCaseLetterValidator :
 
 class ContainsLowerCaseLetterValidator :
     RequirementValidator {
-    override val keywordOnError: String = "no lower case letters"
+    override val keywordOnError: String = "must contain lower case letters"
 
     override fun isValid(password: String?): Boolean =
         password?.contains("[a-z]".toRegex()) == true
@@ -18,7 +18,7 @@ class ContainsLowerCaseLetterValidator :
 
 class ContainsDigitValidator :
     RequirementValidator {
-    override val keywordOnError: String? = "no digits"
+    override val keywordOnError: String = "must contain digits"
 
     override fun isValid(password: String?): Boolean =
         password?.contains("[0-9]".toRegex()) == true
@@ -26,7 +26,7 @@ class ContainsDigitValidator :
 
 class MinCharsValidator(private val minCharsCount: Int) :
     RequirementValidator {
-    override val keywordOnError: String? = "contains less than $minCharsCount chars"
+    override val keywordOnError: String = "must contain at least $minCharsCount chars"
 
     override fun isValid(password: String?): Boolean =
         password?.length ?: 0 >= minCharsCount
@@ -34,7 +34,7 @@ class MinCharsValidator(private val minCharsCount: Int) :
 
 class NoBlanksValidator :
     RequirementValidator {
-    override val keywordOnError: String? = "contains blanks"
+    override val keywordOnError: String = "must not contain blanks"
 
     override fun isValid(password: String?): Boolean =
         password?.contains("\\s".toRegex()) == false
