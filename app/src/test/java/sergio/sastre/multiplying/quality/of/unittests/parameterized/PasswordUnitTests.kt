@@ -4,13 +4,18 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import sergio.sastre.multiplying.quality.of.unittests.*
 import sergio.sastre.multiplying.quality.of.unittests.pbt.doesNotContain
+import sergio.sastre.multiplying.quality.of.unittests.model.validators.*
 import strikt.api.expectThat
 import strikt.assertions.contains
 import strikt.assertions.isNotNull
 import strikt.assertions.isNull
 
+/**
+ * This class shows the best solution for example-based tests, when applicable: parameterized tests
+ * - We avoid tests failing fasts, like with multiple asserts per test
+ * - We avoid code duplication, like with one assert per test
+ */
 class PasswordUnitTests {
 
     private val passwordValidator = PasswordValidator(
@@ -26,11 +31,11 @@ class PasswordUnitTests {
         @DisplayName("PasswordValidator for invalid passwords")
         @ParameterizedTest(name = "When password is \"{0}\", the error contains \"{1}\"")
         @CsvSource(
-            "123456, no upper case letters",
-            "ABCDEF, no digits",
-            "HELLO, no lower case letters",
-            "1234A, contains less than 6 chars",
-            "12 3 456, contains blanks"
+            "123456, must contain upper case letters",
+            "ABCDEF, must contain digits",
+            "HELLO, must contain lower case letters",
+            "1234A, must contain at least 6 chars",
+            "12 3 456, must not contain blanks"
         )
         fun testPasswordValidatorRight(password: String, expectedError: String) {
             val actualError = passwordValidator.validate(password)
@@ -45,11 +50,11 @@ class PasswordUnitTests {
         @DisplayName("PasswordValidator for partially invalid passwords")
         @ParameterizedTest(name = "When password is \"{0}\", the error does not contain \"{1}\"")
         @CsvSource(
-            "A23456, no upper case letters",
-            "1BCDEF, no digits",
-            "hELLO, no lower case letters",
-            "123456, contains less than 6 chars",
-            "123456, contains blanks"
+            "A23456, must contain upper case letters",
+            "1BCDEF, must contain digits",
+            "hELLO, must contain lower case letters",
+            "123456, must contain at least 6 chars",
+            "123456, must not contain blanks"
         )
         fun testPasswordValidatorRight(password: String, expectedError: String) {
             val actualError = passwordValidator.validate(password)

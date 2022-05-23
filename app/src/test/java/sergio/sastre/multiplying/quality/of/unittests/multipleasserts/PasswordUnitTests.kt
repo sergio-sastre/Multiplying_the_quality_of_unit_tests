@@ -2,18 +2,25 @@ package sergio.sastre.multiplying.quality.of.unittests.multipleasserts
 
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import sergio.sastre.multiplying.quality.of.unittests.*
 import sergio.sastre.multiplying.quality.of.unittests.pbt.doesNotContain
+import sergio.sastre.multiplying.quality.of.unittests.model.validators.*
 import strikt.api.expectThat
 import strikt.assertions.contains
 import strikt.assertions.isNotNull
 import strikt.assertions.isNull
 
-
+/**
+ * This class shows the problem of having several asserts.
+ * The more password requirements we get, the more of asserts per test.
+ * It also means, the test will fail fast:
+ * - If several asserts fail, we'll only know about the first one.
+ *
+ * This is very inconvenient if having many assertions in one test
+ */
 class PasswordUnitTests {
 
     @Nested
-    inner class Initial {
+    inner class InitialPasswordValidator {
 
         val passwordValidator =
             PasswordValidator(
@@ -28,15 +35,15 @@ class PasswordUnitTests {
             fun when_WithMissingRequirement() {
                 expectThat(passwordValidator.validate("123456"))
                     .isNotNull()
-                    .contains("no upper case letters")
+                    .contains("must contain upper case letters")
 
                 expectThat(passwordValidator.validate("1234A"))
                     .isNotNull()
-                    .contains("contains less than 6 chars")
+                    .contains("must contain at least 6 chars")
 
                 expectThat(passwordValidator.validate("ABCDEF"))
                     .isNotNull()
-                    .contains("no digits")
+                    .contains("must contain digits")
             }
         }
 
@@ -69,7 +76,7 @@ class PasswordUnitTests {
     }
 
     @Nested
-    inner class Advanced {
+    inner class AdvancedPasswordValidator {
 
         private val passwordValidator = PasswordValidator(
             ContainsUpperCaseLetterValidator(),
@@ -85,23 +92,23 @@ class PasswordUnitTests {
             fun when_WithMissingRequirement() {
                 expectThat(passwordValidator.validate("123456"))
                     .isNotNull()
-                    .contains("no upper case letters")
+                    .contains("must contain upper case letters")
 
                 expectThat(passwordValidator.validate("1234A"))
                     .isNotNull()
-                    .contains("contains less than 6 chars")
+                    .contains("must contain at least 6 chars")
 
                 expectThat(passwordValidator.validate("ABCDEF"))
                     .isNotNull()
-                    .contains("no digits")
+                    .contains("must contain digits")
 
                 expectThat(passwordValidator.validate("HELLO"))
                     .isNotNull()
-                    .contains("no lower case letters")
+                    .contains("must contain lower case letters")
 
                 expectThat(passwordValidator.validate("12 3 456"))
                     .isNotNull()
-                    .contains("contains blanks")
+                    .contains("must not contain blanks")
             }
         }
 
@@ -111,23 +118,23 @@ class PasswordUnitTests {
             fun when_WithMissingRequirement() {
                 expectThat(passwordValidator.validate("A23456"))
                     .isNotNull()
-                    .doesNotContain("no upper case letters")
+                    .doesNotContain("must contain upper case letters")
 
                 expectThat(passwordValidator.validate("123456"))
                     .isNotNull()
-                    .doesNotContain("contains less than 6 chars")
+                    .doesNotContain("must contain at least 6 chars")
 
                 expectThat(passwordValidator.validate("1BCDEF"))
                     .isNotNull()
-                    .doesNotContain("no digits")
+                    .doesNotContain("must contain digits")
 
                 expectThat(passwordValidator.validate("hELLO"))
                     .isNotNull()
-                    .doesNotContain("no lower case letters")
+                    .doesNotContain("must contain lower case letters")
 
                 expectThat(passwordValidator.validate("123456"))
                     .isNotNull()
-                    .doesNotContain("contains blanks")
+                    .doesNotContain("must not contain blanks")
             }
         }
 

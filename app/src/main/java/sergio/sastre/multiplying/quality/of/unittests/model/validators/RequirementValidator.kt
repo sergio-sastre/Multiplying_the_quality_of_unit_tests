@@ -1,4 +1,4 @@
-package sergio.sastre.multiplying.quality.of.unittests
+package sergio.sastre.multiplying.quality.of.unittests.model.validators
 
 interface RequirementValidator {
     val keywordOnError: String?

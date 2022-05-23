@@ -4,12 +4,18 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import sergio.sastre.multiplying.quality.of.unittests.*
-import sergio.sastre.multiplying.quality.of.unittests.broken.ContainsUpperCaseLetterValidator
+import sergio.sastre.multiplying.quality.of.unittests.model.validators.broken.ContainsUpperCaseLetterValidator
+import sergio.sastre.multiplying.quality.of.unittests.model.validators.*
 import strikt.api.expectThat
 import strikt.assertions.contains
 import strikt.assertions.isNotNull
 
+/**
+ * This class shows one of the problems of example-based tests:
+ * - We are just testing the given examples.
+ * That could lead to the following problem:
+ * - The examples, although valid, are not sufficient to fully prove the requirement.
+ */
 class PasswordUnitTests {
 
     private val passwordValidator = PasswordValidator(
@@ -26,11 +32,11 @@ class PasswordUnitTests {
         @DisplayName("PasswordValidator for invalid passwords")
         @ParameterizedTest(name = "When password is \"{0}\", the error contains \"{1}\"")
         @CsvSource(
-            "123456, no upper case letters",
-            "ABCDEF, no digits",
-            "HELLO, no lower case letters",
-            "1234A, contains less than 6 chars",
-            "12 3 456, contains blanks"
+            "123456, must contain upper case letters",
+            "ABCDEF, must contain digits",
+            "HELLO, must contain lower case letters",
+            "1234A, must contain at least 6 chars",
+            "12 3 456, must not contain blanks"
         )
         fun testPasswordValidatorRight(password: String, expectedError: String) {
             val actualError = passwordValidator.validate(password)
@@ -46,12 +52,12 @@ class PasswordUnitTests {
         @DisplayName("PasswordValidator for invalid passwords")
         @ParameterizedTest(name = "When password is \"{0}\", the error contains \"{1}\"")
         @CsvSource(
-            "a23456, no upper case letters", //extra sample that uncovers the error
-            "123456, no upper case letters",
-            "ABCDEF, no digits",
-            "HELLO, no lower case letters",
-            "1234A, contains less than 6 chars",
-            "12 3 456, contains blanks"
+            "a23456, must contain upper case letters", //extra sample that uncovers the error
+            "123456, must contain upper case letters",
+            "ABCDEF, must contain digits",
+            "HELLO, must contain lower case letters",
+            "1234A, must contain at least 6 chars",
+            "12 3 456, must not contain blanks"
         )
         fun testPasswordValidatorRight(password: String, expectedError: String) {
             val actualError = passwordValidator.validate(password)

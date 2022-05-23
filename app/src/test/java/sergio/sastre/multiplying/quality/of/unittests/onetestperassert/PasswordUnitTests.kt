@@ -2,14 +2,19 @@ package sergio.sastre.multiplying.quality.of.unittests.onetestperassert
 
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import sergio.sastre.multiplying.quality.of.unittests.*
 import sergio.sastre.multiplying.quality.of.unittests.pbt.doesNotContain
+import sergio.sastre.multiplying.quality.of.unittests.model.validators.*
 import strikt.api.expectThat
 import strikt.assertions.contains
 import strikt.assertions.isNotNull
 import strikt.assertions.isNull
 
-
+/**
+ * This class shows the problem of having one assert per test.
+ * Although it has improved over having multiple asserts per test,
+ * all the tests have the same structure, and every time we add a new requirement
+ * we are basically copy-pasting one of the previous tests and adjust the values.
+ */
 class PasswordUnitTests {
     private val passwordValidator = PasswordValidator(
         ContainsUpperCaseLetterValidator(),
@@ -27,7 +32,7 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate("123456")
             expectThat(actualError)
                 .isNotNull()
-                .contains("no upper case letters")
+                .contains("must contain upper case letters")
         }
 
         @Test
@@ -35,7 +40,7 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate("HELLO")
             expectThat(actualError)
                 .isNotNull()
-                .contains("no lower case letters")
+                .contains("must contain lower case letters")
         }
 
         @Test
@@ -43,7 +48,7 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate("ABCDEF")
             expectThat(actualError)
                 .isNotNull()
-                .contains("no digits")
+                .contains("must contain digits")
         }
 
         @Test
@@ -51,7 +56,7 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate("12 3 456")
             expectThat(actualError)
                 .isNotNull()
-                .contains("contains blanks")
+                .contains("must not contain blanks")
         }
 
         @Test
@@ -59,7 +64,7 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate("1234A")
             expectThat(actualError)
                 .isNotNull()
-                .contains("contains less than 6 chars")
+                .contains("must contain at least 6 chars")
         }
     }
 
@@ -70,7 +75,7 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate("A12345")
             expectThat(actualError)
                 .isNotNull()
-                .doesNotContain("no upper case letters")
+                .doesNotContain("must contain upper case letters")
         }
 
         @Test
@@ -78,7 +83,7 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate("hELLO")
             expectThat(actualError)
                 .isNotNull()
-                .doesNotContain("no lower case letters")
+                .doesNotContain("must contain lower case letters")
         }
 
         @Test
@@ -86,7 +91,7 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate("1BCDEF")
             expectThat(actualError)
                 .isNotNull()
-                .doesNotContain("no digits")
+                .doesNotContain("must contain digits")
         }
 
         @Test
@@ -94,7 +99,7 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate("123456")
             expectThat(actualError)
                 .isNotNull()
-                .doesNotContain("contains blanks")
+                .doesNotContain("must not contain blanks")
         }
 
         @Test
@@ -102,7 +107,7 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate("123456")
             expectThat(actualError)
                 .isNotNull()
-                .doesNotContain("contains less than 6 chars")
+                .doesNotContain("must contain at least 6 chars")
         }
     }
 

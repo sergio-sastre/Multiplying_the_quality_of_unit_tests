@@ -2,11 +2,17 @@ package sergio.sastre.multiplying.quality.of.unittests.pbt
 
 import net.jqwik.api.*
 import net.jqwik.api.arbitraries.ListArbitrary
-import sergio.sastre.multiplying.quality.of.unittests.*
-import sergio.sastre.multiplying.quality.of.unittests.broken.ContainsUpperCaseLetterValidator
+import sergio.sastre.multiplying.quality.of.unittests.model.validators.broken.ContainsUpperCaseLetterValidator
+import sergio.sastre.multiplying.quality.of.unittests.model.validators.*
 import strikt.api.expectThat
 import strikt.assertions.*
 
+/**
+ * This class shows how Property based tests solve the problems of example based tests:
+ * - We do not pick examples, they (1000 per test) are semi-randomly generated for us
+ *
+ * In doing so, one of the we find out that the problem with the upperCase validator.
+ */
 @Group
 class PasswordUnitTests {
 
@@ -32,7 +38,7 @@ class PasswordUnitTests {
 
         @Label(
             "If password without upper case chars," +
-                    "the error message contains 'no upper case letters'"
+                    "the error message contains 'must contain upper case letters'"
         )
         @Property
         fun testPasswordValidatorRight(@ForAll("noUpperCase") password: String?) {
@@ -41,19 +47,19 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate(password)
             expectThat(actualError)
                 .isNotNull()
-                .contains("no upper case letters")
+                .contains("must contain upper case letters")
         }
 
         @Label(
             "If password with upper case chars, " +
-                    "then the error message does not contain 'no upper case letters'"
+                    "then the error message does not contain 'must contain upper case letters'"
         )
         @Property(seed = "-7293214509268013126")
         fun testPasswordValidatorWrong(@ForAll("withUpperCase") password: String?) {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            expectThat(actualError).isNullOrDoesNotContain("no upper case letters")
+            expectThat(actualError).isNullOrDoesNotContain("must contain upper case letters")
         }
     }
 
@@ -70,7 +76,7 @@ class PasswordUnitTests {
 
         @Label(
             "If password without lower case chars, " +
-                    "then the error message contains 'no lower case letters'"
+                    "then the error message contains 'must contain lower case letters'"
         )
         @Property
         fun testPasswordValidatorRight(@ForAll("noLowerCase") password: String?) {
@@ -80,19 +86,19 @@ class PasswordUnitTests {
 
             expectThat(actualError)
                 .isNotNull()
-                .contains("no lower case letters")
+                .contains("must contain lower case letters")
         }
 
         @Label(
             "If password with lower case chars, " +
-                    "then the error message does not contain 'no lower case letters'"
+                    "then the error message does not contain 'must contain lower case letters'"
         )
         @Property
         fun testPasswordValidatorWrong(@ForAll("withLowerCase") password: String?) {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            expectThat(actualError).isNullOrDoesNotContain("no lower case letters")
+            expectThat(actualError).isNullOrDoesNotContain("must contain lower case letters")
         }
     }
 
@@ -109,7 +115,7 @@ class PasswordUnitTests {
 
         @Label(
             "If password without digits, " +
-                    "then the error message contains 'no digits'"
+                    "then the error message contains 'must contain digits'"
         )
         @Property
         fun testPasswordValidatorRight(@ForAll("noDigits") password: String?) {
@@ -118,19 +124,19 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate(password)
             expectThat(actualError)
                 .isNotNull()
-                .contains("no digits")
+                .contains("must contain digits")
         }
 
         @Label(
             "If password with digits, " +
-                    "then the error message does not contain 'no digits'"
+                    "then the error message does not contain 'must contain digits'"
         )
         @Property
         fun testPasswordValidatorWrong(@ForAll("withDigits") password: String?) {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            expectThat(actualError).isNullOrDoesNotContain("no digits")
+            expectThat(actualError).isNullOrDoesNotContain("must contain digits")
         }
     }
 
@@ -148,7 +154,7 @@ class PasswordUnitTests {
 
         @Label(
             "If password with less than 6 chars, " +
-                    "then the error message does not contain 'contains less than 6 chars'"
+                    "then the error message does not contain 'must contain at least 6 chars'"
         )
         @Property
         fun testPasswordValidatorRight(@ForAll("max5Chars") password: String?) {
@@ -157,19 +163,19 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate(password)
             expectThat(actualError)
                 .isNotNull()
-                .contains("contains less than 6 chars")
+                .contains("must contain at least 6 chars")
         }
 
         @Label(
             "If password with at least 6 chars, " +
-                    "then the error message does not contain 'contains less than 6 chars'"
+                    "then the error message does not contain 'must contain at least 6 chars'"
         )
         @Property
         fun testPasswordValidatorWrong(@ForAll("min6Chars") password: String?) {
             collectPasswordStats(password)
 
             val actualError = passwordValidator.validate(password)
-            expectThat(actualError).isNullOrDoesNotContain("contains less than 6 chars")
+            expectThat(actualError).isNullOrDoesNotContain("must contain at least 6 chars")
         }
     }
 
@@ -186,7 +192,7 @@ class PasswordUnitTests {
 
         @Label(
             "If password with blanks, " +
-                    "then the error message contains 'contains blanks'"
+                    "then the error message contains 'must not contain blanks'"
         )
         @Property
         fun testPasswordValidatorRight(@ForAll("hasBlanks") password: String?) {
@@ -195,12 +201,12 @@ class PasswordUnitTests {
             val actualError = passwordValidator.validate(password)
             expectThat(actualError)
                 .isNotNull()
-                .contains("contains blanks")
+                .contains("must not contain blanks")
         }
 
         @Label(
             "If password without blanks, " +
-                    "then the error message does not contain 'contains blanks'"
+                    "then the error message does not contain 'must not contain blanks'"
         )
         @Property
         fun testPasswordValidatorWrong(@ForAll("noBlanks") password: String?) {
@@ -217,7 +223,7 @@ class PasswordUnitTests {
         private fun String?.amountOf(char: Char): Int = this?.count { it == char } ?: 0
 
         inner class FailingValidator : RequirementValidator {
-            override val keywordOnError: String? = "I always fail"
+            override val keywordOnError: String = "I always fail"
             override fun isValid(password: String?): Boolean = false
         }
 
@@ -226,8 +232,8 @@ class PasswordUnitTests {
             Arbitraries.integers().map { FailingValidator() }.list()
 
         @Label(
-            "When PasswordValidator fails " +
-                    "then the error message contains at least as many commas as single validators - 1,"
+            "When PasswordValidator fails then" +
+                    "the error message contains at least as many commas as single validators - 1,"
         )
         @Property
         fun testPasswordValidatorWrong(
