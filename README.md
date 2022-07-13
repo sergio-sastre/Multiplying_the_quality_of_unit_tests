@@ -15,5 +15,5 @@ You can find the blog posts on the topic here:
 
 2) [Writing bulletproof code with Property-Based testing](https://sergiosastre.hashnode.dev/writing-bulletproof-code-with-property-based-testing-pbt)
 
-As well as the slides of my presentation at Droidcon Lisbon 2022
+As well as the slides of my presentation at Droidcon Lisbon 2022 & Droidcon Berlin 2022
 [Writing bulletproof code with Property-Based testing](https://speakerdeck.com/gio_sastre/writing-bulletproof-code-with-property-based-testing)
