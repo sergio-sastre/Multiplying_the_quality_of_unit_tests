@@ -12,7 +12,7 @@ For 1. & 2, we test the logic behind the **strong password validator** of a **cr
 </p>
 <br>
 For 3, we test that the state of a **text editor** (i.e. displayed text & text to display upon undo/redo actions) is correct after editing, undoing and redoing in any *random order*.
-
+<br>
 <p align="center">
 <img width="250" src="https://user-images.githubusercontent.com/6097181/181569006-db7cee16-b200-4bc2-88ba-2e6ad2441a94.gif">
 </p>
