@@ -5,13 +5,14 @@ An Android project in *Jetpack Compose* to showcase how to improve our unit test
 3. Advance use of *property-based tests* for stateful testing: 
   verify that the state of our model is correct after performing any action on it.
 
-For 1. & 2, we test the logic behind the **strong password validator** of a **create account** screen.
+For 1. & 2, we test the logic behind the **strong password validator** of a [**create account**](https://github.com/sergio-sastre/Multiplying_the_quality_of_unit_tests/tree/master/passwordvalidator) screen.
 
 <p align="center">
 <img width="250" src="https://user-images.githubusercontent.com/6097181/169895372-f21adba4-5478-4bd4-8b9d-3676da049d4d.gif">
 </p>
-<br>
-For 3, we test that the state of a **text editor** (i.e. displayed text & text to display upon undo/redo actions) is correct after editing, undoing and redoing in any *random order*.
+
+
+For 3, we test that the state of a [**text editor**](https://github.com/sergio-sastre/Multiplying_the_quality_of_unit_tests/tree/master/texteditor) (i.e. displayed text & text to display upon undo/redo actions) is correct after editing, undoing and redoing in any *random order*.
 <br>
 <p align="center">
 <img width="250" src="https://user-images.githubusercontent.com/6097181/181569006-db7cee16-b200-4bc2-88ba-2e6ad2441a94.gif">
