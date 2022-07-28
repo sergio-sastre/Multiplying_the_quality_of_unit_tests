@@ -1,2 +1,3 @@
-include ':app'
 rootProject.name = "Multiplying the quality of unit tests"
+include ':texteditor'
+include ':passwordvalidator'
