@@ -60,21 +60,25 @@ class TextEditorStatefulTest {
     @Group
     inner class ForceBufferAtMax {
 
+        // given
+        private val textEditor = TextEditor()
+
         @Provide
         private fun arbitraryTextChangeActionsAmount() =
-            Arbitraries.integers().between(TextEditor.BUFFER_SIZE + 1, TextEditor.BUFFER_SIZE + 20)
+            // amount over buffer size to force the buffer being at its max
+            Arbitraries.integers().between(textEditor.bufferSize + 1, textEditor.bufferSize + 20)
 
         @Property
         fun sequenceOfTextActionsOverUndoMaxBuffer_keepsUndoMaxBufferAtMax(
             @ForAll("arbitraryTextState") textState: TextState,
             @ForAll("arbitraryTextChangeActionsAmount") textChangeActionsAmount: Int
         ) {
-            val textEditor = TextEditor()
-
+            // when
             repeat(textChangeActionsAmount) {
                 textEditor.textStateChange(textState.first, textState.second)
             }
 
+            // then
             expectThat(textEditor.getModelState()) {
                 verifyUndoActionsCountIsAtMax()
                 undoActionsSizeEquals(textEditor.bufferSize)
@@ -87,9 +91,6 @@ class TextEditorStatefulTest {
             @ForAll("arbitraryTextState") textState: TextState,
             @ForAll("arbitraryTextChangeActionsAmount") textChangeActionsAmount: Int
         ) {
-            // given
-            val textEditor = TextEditor()
-
             // when
             repeat(textChangeActionsAmount) {
                 textEditor.textStateChange(textState.first, textState.second)
@@ -114,9 +115,6 @@ class TextEditorStatefulTest {
             @ForAll("arbitraryTextState") textState: TextState,
             @ForAll("arbitraryTextChangeActionsAmount") textChangeActionsAmount: Int
         ) {
-            // given
-            val textEditor = TextEditor()
-
             // when
             repeat(textChangeActionsAmount) {
                 textEditor.textStateChange(textState.first, textState.second)
