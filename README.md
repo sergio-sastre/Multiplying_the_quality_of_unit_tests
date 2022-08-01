@@ -24,7 +24,7 @@ You can find the blog posts on the topic here:
 
 2) [Writing bulletproof code with Property-Based testing](https://sergiosastre.hashnode.dev/writing-bulletproof-code-with-property-based-testing-pbt)
 
-3) Super testing data models with stateful tests (coming soon...)
+3) Super testing state holders with stateful tests (coming soon...)
 
 As well as the slides of my presentation at Droidcon Lisbon 2022 & Droidcon Berlin 2022
 
