@@ -2,7 +2,7 @@
 An Android project in *Jetpack Compose* to showcase how to improve our unit tests step by step:
 1. From tests *multiple assertions* to *parameterized example-based tests*,
 2. Add extra *property-based tests* to catch regression bugs that *parameterized tests* cannot.
-3. Advance use of *property-based tests* for stateful testing: 
+3. Advanced use of *property-based tests* for stateful testing: 
   verify that the state of our model is correct after performing any action on it.
 
 For 1. & 2, we test the logic behind the **strong password validator** of a [**create account**](https://github.com/sergio-sastre/Multiplying_the_quality_of_unit_tests/tree/master/passwordvalidator) screen.
