@@ -9,7 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import sergio.sastre.multiplying.quality.of.unittests.texteditor.model.TextEditorViewModel
+import sergio.sastre.multiplying.quality.of.unittests.texteditor.model.TextEditingViewModel
 import sergio.sastre.multiplying.quality.of.unittests.texteditor.ui.*
 
 class TextEditorActivity : ComponentActivity() {
@@ -24,7 +24,7 @@ class TextEditorActivity : ComponentActivity() {
 
 @Composable
 fun TextEditorScreen() {
-    val viewModel: TextEditorViewModel = viewModel()
+    val viewModel: TextEditingViewModel = viewModel()
     val viewState by remember(viewModel) { viewModel.uiState }.collectAsState()
 
     MaterialTheme {

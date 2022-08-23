@@ -12,10 +12,13 @@ class TextChangeAction(
     private val cursorPosition: Int,
 ) : Action<TextEditor> {
     override fun run(state: TextEditor): TextEditor {
-        val previousUndoTexts = state.getModelState().copy().undoTextFieldStates
+        // 1. save previous state
+        val previousUndoTexts = state.getModelState().copy().undoTextStates
 
+        // 2. perform action
         state.textStateChange(newText, cursorPosition)
 
+        // 3. assert new state
         expectThat(state.getModelState()) {
             displayedTextEquals(newText)
             undoActionsSizeIncreasedByOneUpToMax(
@@ -28,7 +31,8 @@ class TextChangeAction(
         return state
     }
 
+    // override for more readable logs in the Jqwik report
     override fun toString(): String {
-        return "TextChangedAction($newText)"
+        return "TextChangeAction($newText, $cursorPosition)"
     }
 }

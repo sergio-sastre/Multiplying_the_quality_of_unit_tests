@@ -7,9 +7,3 @@ interface CreateAccountEvent {
     fun createAccountAction()
 }
 
-sealed class CreateAccountEvent2 {
-
-    class PasswordChanged(val password: String): CreateAccountEvent2()
-
-    object CreateAccountAction: CreateAccountEvent2()
-}

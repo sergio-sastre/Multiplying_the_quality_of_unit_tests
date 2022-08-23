@@ -1,16 +1,16 @@
 package sergio.sastre.multiplying.quality.of.unittests.texteditor.model
 
-import sergio.sastre.multiplying.quality.of.unittests.texteditor.datastructures.CircularStack
+import sergio.sastre.multiplying.quality.of.unittests.texteditor.datastructures.CircularBuffer
 import java.util.Stack
 
 data class TextEditorModelState(
     val bufferSize: Int,
-    val textFieldState: TextFieldState = TextFieldState(),
-    val undoTextFieldStates: Stack<TextFieldState> = CircularStack(bufferSize),
-    val redoTextFieldStates: Stack<TextFieldState> = CircularStack(bufferSize),
+    val textState: TextState = TextState(),
+    val undoTextStates: Stack<TextState> = CircularBuffer(bufferSize),
+    val redoTextStates: Stack<TextState> = CircularBuffer(bufferSize),
 ) {
 
-    data class TextFieldState(
+    data class TextState(
         val displayedText: String = "",
         val cursorPosition: Int = 0,
     )
@@ -20,17 +20,17 @@ data class TextEditorModelState(
     fun copy(): TextEditorModelState {
         return TextEditorModelState(
             bufferSize = bufferSize,
-            textFieldState = textFieldState,
-            undoTextFieldStates = undoTextFieldStates.clone() as CircularStack<TextFieldState>,
-            redoTextFieldStates = redoTextFieldStates.clone() as CircularStack<TextFieldState>,
+            textState = textState,
+            undoTextStates = undoTextStates.clone() as CircularBuffer<TextState>,
+            redoTextStates = redoTextStates.clone() as CircularBuffer<TextState>,
         )
     }
 
     fun toUiState(): TextEditorUiState =
         TextEditorUiState(
-            bodyText = textFieldState.displayedText,
-            cursorPosition = textFieldState.cursorPosition,
-            redoEnabled = redoTextFieldStates.isNotEmpty(),
-            undoEnabled = undoTextFieldStates.isNotEmpty(),
+            bodyText = textState.displayedText,
+            cursorPosition = textState.cursorPosition,
+            redoEnabled = redoTextStates.isNotEmpty(),
+            undoEnabled = undoTextStates.isNotEmpty(),
         )
 }

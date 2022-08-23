@@ -9,14 +9,17 @@ import strikt.api.expectThat
 
 class RedoAction : Action<TextEditor> {
     override fun precondition(state: TextEditor): Boolean =
-        state.getModelState().redoTextFieldStates.isNotEmpty()
+        state.getModelState().redoTextStates.isNotEmpty()
 
     override fun run(state: TextEditor): TextEditor {
-        val previousRedoTexts = state.getModelState().copy().redoTextFieldStates
-        val previousUndoTexts = state.getModelState().copy().undoTextFieldStates
+        // 1. save previous state
+        val previousRedoTexts = state.getModelState().copy().redoTextStates
+        val previousUndoTexts = state.getModelState().copy().undoTextStates
 
+        // 2. perform action
         state.redo()
 
+        // 3. assert new state
         expectThat(state.getModelState()) {
             displayedTextEquals(previousRedoTexts.last().displayedText)
             redoActionsSizeEquals(previousRedoTexts.size - 1)
@@ -29,6 +32,7 @@ class RedoAction : Action<TextEditor> {
         return state
     }
 
+    // override for more readable logs in the Jqwik report
     override fun toString(): String {
         return "RedoAction"
     }

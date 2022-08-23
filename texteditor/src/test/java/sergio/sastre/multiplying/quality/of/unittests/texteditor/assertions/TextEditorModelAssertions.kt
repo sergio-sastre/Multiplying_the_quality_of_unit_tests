@@ -15,7 +15,7 @@ fun Assertion.Builder<TextEditorModelState>.undoActionsSizeIncreasedByOneUpToMax
     maxUndoActionsSize: Int
 ) =
     assert("undoActions size = old undoActions size + 1, but never more than $maxUndoActionsSize") {
-        val currentUndoActionsSize = it.undoTextFieldStates.size
+        val currentUndoActionsSize = it.undoTextStates.size
         if (currentUndoActionsSize == min(maxUndoActionsSize, previousActionsSize + 1)) {
             pass()
         } else if (currentUndoActionsSize != previousActionsSize + 1) {
@@ -46,7 +46,7 @@ fun Assertion.Builder<TextEditorModelState>.redoActionsSizeIncreasedByOneUpToMax
     maxRedoActionsSize: Int
 ) =
     assert("redoActions size = old redoActions size + 1, but never more than $maxRedoActionsSize") {
-        val currentRedoActionsSize = it.redoTextFieldStates.size
+        val currentRedoActionsSize = it.redoTextStates.size
         if (currentRedoActionsSize == min(maxRedoActionsSize, previousActionsSize + 1)) {
             pass()
         } else if (currentRedoActionsSize != previousActionsSize + 1) {
@@ -74,7 +74,7 @@ fun Assertion.Builder<TextEditorModelState>.redoActionsSizeIncreasedByOneUpToMax
 
 fun Assertion.Builder<TextEditorModelState>.redoActionsSizeEquals(size: Int) =
     assert("redoActions size equals $size") {
-        val currentRedoActionsSize = it.redoTextFieldStates.size
+        val currentRedoActionsSize = it.redoTextStates.size
         if (currentRedoActionsSize == size) {
             pass()
         } else {
@@ -104,7 +104,7 @@ fun Assertion.Builder<TextEditorModelState>.redoActionIsEnabled(enabled: Boolean
 
 fun Assertion.Builder<TextEditorModelState>.undoActionsSizeEquals(size: Int) =
     assert("undoActions size equals $size") {
-        val currentUndoActionsSize = it.undoTextFieldStates.size
+        val currentUndoActionsSize = it.undoTextStates.size
         if (currentUndoActionsSize == size) {
             pass()
         } else {
@@ -129,7 +129,7 @@ fun Assertion.Builder<TextEditorModelState>.verifyRedoActionsCountIsAtMax() = ru
 
 fun Assertion.Builder<TextEditorModelState>.displayedTextEquals(text: String?) =
     assert("currentText equals $text") {
-        if (it.textFieldState.displayedText == text) {
+        if (it.textState.displayedText == text) {
             pass()
         } else {
             fail("displayed text != $text")
