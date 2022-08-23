@@ -10,7 +10,7 @@ const val RedoInBetween = "redo in between"
 
 fun collectStatsUndo(textEditorModelState: TextEditorModelState) {
     val bufferSize = textEditorModelState.bufferSize
-    val undoStatesSize = textEditorModelState.undoTextFieldStates.size
+    val undoStatesSize = textEditorModelState.undoTextStates.size
     val reachedBufferSize = undoStatesSize == bufferSize
     val statistics = if (reachedBufferSize) UndoAtMax else UndoInBetween
     Statistics.collect(statistics)
@@ -18,7 +18,7 @@ fun collectStatsUndo(textEditorModelState: TextEditorModelState) {
 
 fun collectStatsRedo(textEditorModelState: TextEditorModelState) {
     val bufferSize = textEditorModelState.bufferSize
-    val undoStatesSize = textEditorModelState.redoTextFieldStates.size
+    val undoStatesSize = textEditorModelState.redoTextStates.size
     val reachedBufferSize = undoStatesSize == bufferSize
     val statistics = if (reachedBufferSize) RedoAtMax else RedoInBetween
     Statistics.collect(statistics)

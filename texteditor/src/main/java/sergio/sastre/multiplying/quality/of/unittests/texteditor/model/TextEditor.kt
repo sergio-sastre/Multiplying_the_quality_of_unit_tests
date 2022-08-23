@@ -1,11 +1,11 @@
 package sergio.sastre.multiplying.quality.of.unittests.texteditor.model
 
 class TextEditor(
-    val bufferSize: Int = BUFFER_SIZE
-): TextEditorEvent {
+    val bufferSize: Int = DEFAULT_BUFFER_SIZE
+): TextEditingEvent {
 
     companion object {
-        const val BUFFER_SIZE = 20
+        const val DEFAULT_BUFFER_SIZE = 20
     }
 
     private var modelState = TextEditorModelState(bufferSize = bufferSize)
@@ -13,28 +13,28 @@ class TextEditor(
     override fun undo() {
         modelState =
             modelState.copy(
-                redoTextFieldStates = modelState.redoTextFieldStates.apply { push(modelState.textFieldState) },
-                textFieldState = modelState.undoTextFieldStates.peek(),
-                undoTextFieldStates = modelState.undoTextFieldStates.apply { pop() },
+                redoTextStates = modelState.redoTextStates.apply { push(modelState.textState) },
+                textState = modelState.undoTextStates.peek(),
+                undoTextStates = modelState.undoTextStates.apply { pop() },
             )
     }
 
     override fun redo() {
         modelState = modelState.copy(
-            undoTextFieldStates = modelState.undoTextFieldStates.apply { push(modelState.textFieldState) },
-            textFieldState = modelState.redoTextFieldStates.peek(),
-            redoTextFieldStates = modelState.redoTextFieldStates.apply { pop() },
+            undoTextStates = modelState.undoTextStates.apply { push(modelState.textState) },
+            textState = modelState.redoTextStates.peek(),
+            redoTextStates = modelState.redoTextStates.apply { pop() },
         )
     }
 
     override fun textStateChange(newText: String, cursorPosition: Int) {
         modelState = modelState.copy(
-            undoTextFieldStates = modelState.undoTextFieldStates.apply { push(modelState.textFieldState) },
-            textFieldState = modelState.textFieldState.copy(
+            undoTextStates = modelState.undoTextStates.apply { push(modelState.textState) },
+            textState = modelState.textState.copy(
                 displayedText = newText,
                 cursorPosition = cursorPosition,
             ),
-            redoTextFieldStates = modelState.redoTextFieldStates.apply { clear() },
+            redoTextStates = modelState.redoTextStates.apply { clear() },
         )
     }
 

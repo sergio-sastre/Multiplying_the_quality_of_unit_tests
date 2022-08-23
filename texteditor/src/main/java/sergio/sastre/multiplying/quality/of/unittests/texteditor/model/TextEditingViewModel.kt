@@ -3,9 +3,9 @@ package sergio.sastre.multiplying.quality.of.unittests.texteditor.model
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class TextEditorViewModel : ViewModel(), TextEditorEvent {
+class TextEditingViewModel : ViewModel(), TextEditingEvent {
 
-    val textEditor = TextEditor(20)
+    val textEditor = TextEditor()
     val uiState = MutableStateFlow(TextEditorUiState())
 
     override fun textStateChange(newText: String, cursorPosition: Int) {

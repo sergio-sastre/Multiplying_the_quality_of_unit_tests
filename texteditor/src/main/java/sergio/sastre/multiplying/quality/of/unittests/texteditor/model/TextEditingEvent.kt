@@ -1,6 +1,6 @@
 package sergio.sastre.multiplying.quality.of.unittests.texteditor.model
 
-interface TextEditorEvent {
+interface TextEditingEvent {
 
     fun textStateChange(newText: String, cursorPosition: Int)
 
