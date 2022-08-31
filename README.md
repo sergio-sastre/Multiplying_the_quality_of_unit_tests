@@ -1,5 +1,5 @@
 # Multiplying the quality of unit tests
-An Android project in *Jetpack Compose* to showcase how to improve our unit tests step by step:
+An Android project to showcase how to improve our unit tests step by step:
 1. From tests *multiple assertions* to *parameterized example-based tests*,
 2. Add extra *property-based tests* to catch regression bugs that *parameterized tests* cannot.
 3. Advanced use of *property-based tests* for stateful testing: 
@@ -24,8 +24,10 @@ You can find the blog posts on the topic here:
 
 2) [Writing bulletproof code with Property-Based testing](https://sergiosastre.hashnode.dev/writing-bulletproof-code-with-property-based-testing-pbt)
 
-3) Super testing state holders with stateful tests (coming soon...)
+3) [Top-notch stateful testing in Android](https://sergiosastre.hashnode.dev/top-notch-stateful-testing-in-android)
 
-As well as the slides of my presentation at Droidcon Lisbon 2022 & Droidcon Berlin 2022
+And also the video and slides of my tech-talk "Writing bulletproof code with Property-Based testing" at Droidcon Lisbon 2022 (only slides) & Droidcon Berlin 2022
 
-Slides - [Writing bulletproof code with Property-Based testing](https://speakerdeck.com/gio_sastre/writing-bulletproof-code-with-property-based-testing)
+1) [Tech-talk video Droidcon Berlin 2022](https://www.droidcon.com/2022/08/01/writing-bulletproof-code-with-property-based-testing/)
+2) [Slides Droidcon Lisbon 2022 & Droidcon Berlin 2022](https://speakerdeck.com/gio_sastre/writing-bulletproof-code-with-property-based-testing)
+
