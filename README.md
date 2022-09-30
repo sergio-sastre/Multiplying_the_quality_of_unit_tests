@@ -1,3 +1,7 @@
+part of the blog post **Top-notch stateful testing in Android** featured in</br>
+<a href="https://androidweekly.net/issues/issue-534">
+<img src="https://androidweekly.net/issues/issue-534/badge">
+
 # Multiplying the quality of unit tests
 An Android project to showcase how to improve our unit tests step by step:
 1. From tests *multiple assertions* to *parameterized example-based tests*,
