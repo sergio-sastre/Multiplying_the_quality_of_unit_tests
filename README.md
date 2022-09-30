@@ -1,4 +1,4 @@
-part of the blog post [**Top-notch stateful testing in Android**](https://sergiosastre.hashnode.dev/top-notch-stateful-testing-in-android) featured in</br>
+part of the blog post [**Top-notch stateful testing in Android**](https://sergiosastre.hashnode.dev/top-notch-stateful-testing-in-android) </br>
 <a href="https://androidweekly.net/issues/issue-534">
 <img src="https://androidweekly.net/issues/issue-534/badge">
 
