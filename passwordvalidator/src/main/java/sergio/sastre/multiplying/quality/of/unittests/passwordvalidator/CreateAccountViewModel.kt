@@ -11,8 +11,8 @@ class CreateAccountViewModel : ViewModel(), CreateAccountEvent {
 
     private val passwordValidator = StrongPasswordValidator()
 
-    private val modelState = MutableStateFlow(CreateAccountModelState())
-    private val uiState = MutableStateFlow(CreateAccountUiState())
+    val modelState = MutableStateFlow(CreateAccountModelState())
+    val uiState = MutableStateFlow(CreateAccountUiState())
 
     override fun passwordChanged(password: String) {
         modelState.value = modelState.value.copy(password = password)

@@ -46,7 +46,7 @@ class TextEditorStatefulTest {
             )
         )
 
-    @Property
+    @Property(tries = 1000)
     fun executeRandomSequenceOfActions_textEditorModelStateIsCorrect(
         @ForAll("arbitraryTextEditorActionSequence") actionSequence: ActionSequence<TextEditor>
     ) {
